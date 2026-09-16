@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Worker Score Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .score {
+      font-size: 48px;
+      font-weight: bold;
+      color: #2c7a2c;
+    }
+    .worker-name {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    th {
+      background: #eef2f7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- This is where the worker's name and score will be shown -->
+  <div class="card">
+    <div class="worker-name" id="workerName"></div>
+    <div class="score" id="workerScore"></div>
+  </div>
+
+  <!-- This is where the list of contributing tasks/evidence will be shown -->
+  <div class="card">
+    <h3>What contributed to this score</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Date</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody id="evidenceTable">
+        <!-- rows get filled in by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // 1. FAKE SAMPLE DATA
+    // In a real app, this would come from a server/database.
+    // For now, we just hardcode it so we can build the page.
+    const worker = {
+      name: "Alex Johnson",
+      score: 87
+    };
+
+    const evidence = [
+      { task: "Assembled Unit A-12", date: "2026-09-10", rating: 9 },
+      { task: "Quality Check Batch 7", date: "2026-09-12", rating: 8 },
+      { task: "Assisted Training Session", date: "2026-09-14", rating: 7 },
+      { task: "Packed Shipment #204", date: "2026-09-15", rating: 9 }
+    ];
+
+    // 2. FILL IN THE WORKER'S NAME AND SCORE
+    // document.getElementById finds the HTML element by its "id"
+    // and .textContent sets the text shown inside it.
+    document.getElementById("workerName").textContent = worker.name;
+    document.getElementById("workerScore").textContent = worker.score;
+
+    // 3. BUILD THE EVIDENCE TABLE ROWS
+    // We loop over each item in the "evidence" array
+    // and create one <tr> (table row) per item.
+    const tableBody = document.getElementById("evidenceTable");
+
+    evidence.forEach(function(item) {
+      // create a new empty row
+      const row = document.createElement("tr");
+
+      // fill the row with 3 columns: task, date, rating
+      row.innerHTML = `
+        <td>${item.task}</td>
+        <td>${item.date}</td>
+        <td>${item.rating}</td>
+      `;
+
+      // add the finished row into the table
+      tableBody.appendChild(row);
+    });
+  </script>
+
+</body>
+</html>
